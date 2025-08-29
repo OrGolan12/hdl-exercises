@@ -1,11 +1,11 @@
-# Edge Detection in SystemVerilog
+# Rising Edge Detection in SystemVerilog
 
 ## Overview
 This project implements a rising-edge detector in SystemVerilog. The design generates a one-cycle pulse whenever the input signal transitions from low to high. A testbench is included to verify functionality by applying multiple input pulses with varying on/off times.
 
 ## Files
 
-### edge_detection.sv
+### pos_edge_detection.sv
 - **Inputs:**
   - `clk`: System clock.
   - `in`: Input signal to be monitored.
@@ -21,38 +21,38 @@ This project implements a rising-edge detector in SystemVerilog. The design gene
   ```
   When reset is active, the delayed state is cleared.
 
-### edge_detection_tb.sv
+### pos_edge_detection_tb.sv
 - Generates a clock with a configurable period (`CLK_PERIOD`).
 - Applies a reset sequence before testing.
-- Creates pulses on `in` with varying `on` and `off` cycle lengths.
+- Creates pulses on `in` with random pulse widths.
 - Repeats the process `PULSE_AMOUNT` times (default is 5).
-- Displays progress messages using `$display`.
-- Can produce a waveform dump for debugging.
 
 **Expected behavior:**  
 For every low-to-high transition of `in`, the output `out` should be high for exactly one clock cycle. Falling edges do not generate pulses.
 
+**Testbench Waveforms:** 
+<img width="2048" height="150" alt="image" src="https://github.com/user-attachments/assets/5f36a023-10c4-4741-b493-770c62fe6daf" />
+
+**Synthesis**
+<img width="2048" height="582" alt="image" src="https://github.com/user-attachments/assets/f945f7ee-2cb3-4ac3-8633-19e93ee8cf3f" />
+
 ## Tools and Requirements
 - SystemVerilog simulator (ModelSim, QuestaSim, Icarus Verilog, or Verilator).
-- GTKWave or similar waveform viewer (optional).
+- GTKWave or similar waveform viewer.
 
 ## Running the Simulation
 1. Compile the design and testbench:
    ```bash
-   vlog edge_detection.sv edge_detection_tb.sv
+   iverilog -g2012 -o sim pos_edge_detection_tb.sv pos_edge_detection.sv
    ```
 
 2. Run the simulation:
    ```bash
-   vsim edge_detection_tb
+   vvp sim
    ```
 
-3. (Optional) Open the waveform dump:
+3. Open the waveform dump:
    ```bash
-   gtkwave dump.vcd
+   gtkwave edge_detection_tb.vcd
    ```
 
-## Future Improvements
-- Add support for falling-edge or dual-edge detection.
-- Add SystemVerilog Assertions (SVA) for automatic checks.
-- Extend the testbench with randomized edge cases.

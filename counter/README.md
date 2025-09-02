@@ -36,9 +36,11 @@ This project implements a parameterized modulo counter in SystemVerilog. The cou
 - During reset, the counter always returns to 0.
 
 **Testbench Waveforms:**  
+<img width="1692" height="144" alt="image" src="https://github.com/user-attachments/assets/a06f980f-2197-4afe-ae1d-f825569f8faf" />
 
 
 **Synthesis:**  
+<img width="1427" height="423" alt="image" src="https://github.com/user-attachments/assets/bba203d5-9636-428e-a769-f5610fd1cce3" />
 
 
 ## Tools and Requirements

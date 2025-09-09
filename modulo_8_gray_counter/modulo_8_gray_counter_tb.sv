@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module modulo_8_gray_counter_tb;
     localparam CLK_PERIOD = 10;
     logic clk;
@@ -12,7 +13,7 @@ module modulo_8_gray_counter_tb;
         $timeformat(-9,2," ns",10);
         $dumpfile("modulo_8_gray_counter_tb.vcd");
         $dumpvars(0, modulo_8_gray_counter_tb);
-        $monitor("[%0t] count=%0b", $time,count);
+        $monitor("[%3t] count=%3b", $time,count);
     end
 
     task reset_dut(); begin

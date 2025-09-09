@@ -41,10 +41,10 @@ This project implements a parameterized modulo counter in SystemVerilog. The cou
 - During reset, the counter always returns to 0.  
 
 **Testbench Waveforms:**  
-Simulation waveforms showing counter increments and wrap-around can be viewed in GTKWave.  
+<img width="1692" height="144" alt="image" src="https://github.com/user-attachments/assets/a06f980f-2197-4afe-ae1d-f825569f8faf" />
 
 **Synthesis:**  
-The design is synthesizable for FPGA/ASIC targets as a generic modulo counter.  
+<img width="1427" height="423" alt="image" src="https://github.com/user-attachments/assets/bba203d5-9636-428e-a769-f5610fd1cce3" /> 
 
 ## Tools and Requirements
 - SystemVerilog simulator (ModelSim, QuestaSim, Icarus Verilog, or Verilator).  

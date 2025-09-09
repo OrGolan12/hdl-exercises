@@ -1,7 +1,7 @@
 # Modulo-8 Gray Counter in SystemVerilog
 
 ## Overview
-This project implements a modulo-8 **Gray code counter** in SystemVerilog. The counter cycles through the 8 valid 3-bit Gray code states (0 to 7) and wraps back to 0. A dedicated testbench is provided to verify functionality through directed and randomized stimulus.
+This project implements a modulo-8 **Gray code counter** in SystemVerilog. The counter cycles through the 8 valid 3-bit Gray code states (0 to 7) and wraps back to 0. A dedicated testbench is provided to verify functionality.
 
 ## Files
 
@@ -12,22 +12,24 @@ This project implements a modulo-8 **Gray code counter** in SystemVerilog. The c
 - **Inputs:**
   - `clk`: System clock.
   - `rst_n`: Active-low asynchronous reset.
-  - `en`: Enable signal; counter advances when high.
 
 - **Output:**
-  - `out`: Current counter value (3-bit Gray code).
+  - `count`: Current counter value (3-bit Gray code).
 
 - **How it works:**
-  - On each rising edge of `clk`, if `rst_n` is low, the counter resets to the starting Gray state (`000`).
-  - If `en` is asserted, the counter advances to the next Gray code value in the modulo-8 sequence.
-  - After reaching the last Gray code state, the counter wraps around to `000`.
+  - The counter resets asynchronously to the starting Gray state (`000`) when `rst_n` is low, and resumes counting on rising `clk` edges once `rst_n` is high.
+  - The counter advances through the Gray code sequence, wrapping back to `000` after 8 states.
 
 ### modulo_8_gray_counter_tb.sv
-- Generates a configurable clock signal.
-- Applies reset at the beginning and mid-simulation.
-- Provides a task to generate single-cycle pulses on `en`.
-- Compares DUT output against an expected Gray code reference model for verification.
-- Includes randomized stimulus to validate proper sequence traversal and wrap-around.
+- Generates a clock with a 10 ns period (`CLK_PERIOD = 10`).
+- Dumps waveforms to `modulo_8_gray_counter_tb.vcd` for GTKWave viewing.
+- Displays counter activity with `$monitor` for console logging.
+- Provides a `reset_dut` task:
+  - Drives reset low for one clock cycle, then releases it.
+- Simulation sequence:
+  - Apply reset at the start.
+  - Run for 10 clock cycles.
+  - Finish simulation.
 
 **Expected behavior:**  
 - After reset, the counter starts at `000` (Gray code for 0).  
@@ -37,6 +39,14 @@ This project implements a modulo-8 **Gray code counter** in SystemVerilog. The c
   ```
 - Counter always returns to `000` during reset.  
 - Wrap-around occurs after 8 states.  
+
+**Console Output Example:**  
+```
+[ 0.00 ns] count=000
+[10.00 ns] count=001
+[20.00 ns] count=011
+...
+```
 
 **Testbench Waveforms:**  
 <img width="1531" height="110" alt="image" src="https://github.com/user-attachments/assets/5af4a5dc-5500-46e9-9bec-9a960c0104ee" />

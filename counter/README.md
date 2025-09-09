@@ -1,7 +1,7 @@
 # Parameterized Counter in SystemVerilog
 
 ## Overview
-This project implements a parameterized modulo counter in SystemVerilog. The counter increments by one on each clock cycle where the `in` signal is asserted. Once the counter reaches its maximum value (`COUNT-1`), it wraps back to zero. A testbench is provided to verify the counter through directed and randomized stimulus.
+This project implements a parameterized modulo counter in SystemVerilog. The counter increments by one on each clock cycle where the `in` signal is asserted. Once the counter reaches its maximum value (`COUNT-1`), it wraps back to zero. A testbench is provided to verify the counter through directed stimulus.
 
 ## Files
 
@@ -23,29 +23,32 @@ This project implements a parameterized modulo counter in SystemVerilog. The cou
   - The output continuously reflects the counter value.
 
 ### counter_tb.sv
-- Generates a clock with a configurable period (`CLK_PERIOD`).
-- Applies reset at the beginning and mid-simulation.
-- Uses a reusable task `pulse()` to drive one-cycle enables on `in`.
-- Compares DUT output against an expected reference model for verification.
-- Includes randomized stimulus to validate multiple wrap-around scenarios.
+- Generates a clock with a configurable period (`CLK_PERIOD`, here 10 time units).
+- Provides a reusable task `reset_dut()`:
+  - Holds reset low, then releases it after a fixed delay.
+- Provides a reusable task `pulse()`:
+  - Drives one-cycle enables on `in` to increment the counter.
+- Simulation sequence:
+  - Apply reset at the start.
+  - Generate a sequence of `pulse()` events to advance the counter.
+  - Finish after a fixed number of increments.
+- Dumps waveforms to `counter_tb.vcd` for GTKWave viewing.
 
 **Expected behavior:**  
-- The counter starts at 0 after reset.
-- Each input pulse increments the counter.
-- After reaching `COUNT-1`, the counter wraps to 0.
-- During reset, the counter always returns to 0.
+- The counter starts at 0 after reset.  
+- Each call to `pulse()` increments the counter.  
+- After reaching `COUNT-1`, the counter wraps to 0.  
+- During reset, the counter always returns to 0.  
 
 **Testbench Waveforms:**  
-<img width="1692" height="144" alt="image" src="https://github.com/user-attachments/assets/a06f980f-2197-4afe-ae1d-f825569f8faf" />
-
+Simulation waveforms showing counter increments and wrap-around can be viewed in GTKWave.  
 
 **Synthesis:**  
-<img width="1427" height="423" alt="image" src="https://github.com/user-attachments/assets/bba203d5-9636-428e-a769-f5610fd1cce3" />
-
+The design is synthesizable for FPGA/ASIC targets as a generic modulo counter.  
 
 ## Tools and Requirements
-- SystemVerilog simulator (ModelSim, QuestaSim, Icarus Verilog, or Verilator).
-- GTKWave or another waveform viewer.
+- SystemVerilog simulator (ModelSim, QuestaSim, Icarus Verilog, or Verilator).  
+- GTKWave or another waveform viewer.  
 
 ## Running the Simulation
 1. Compile the design and testbench:
